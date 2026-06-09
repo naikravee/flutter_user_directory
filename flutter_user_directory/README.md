@@ -1,16 +1,114 @@
-# flutter_user_directory
+# Flutter User Directory App
 
-A new Flutter project.
+A Flutter application developed as part of the Elyx Digital Flutter Developer Assignment.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+* User Listing
+* User Details
+* Search Functionality
+* Infinite Pagination
+* Pull To Refresh
+* Offline Cache
+* Dependency Injection
+* Error Handling
+* Responsive UI
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Architecture
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Feature First Architecture with Clean Separation.
+
+Layers:
+
+Presentation
+
+* UI
+* Bloc
+
+Data
+
+* Repository
+* Remote Data Source
+* Local Data Source
+
+Core
+
+* Network
+* Error Handling
+* Dependency Injection
+
+---
+
+## State Management
+
+flutter_bloc
+
+---
+
+## Dependency Injection
+
+get_it
+
+---
+
+## Networking
+
+dio
+
+---
+
+## Local Storage
+
+hive
+
+---
+
+## Project Structure
+
+lib/
+
+core/
+features/
+injection/
+
+---
+
+## Setup
+
+1. Clone repository
+
+2. Install dependencies
+
+flutter pub get
+
+3. Generate Hive adapters
+
+flutter pub run build_runner build
+
+4. Run application
+
+flutter run
+
+---
+
+## Packages Used
+
+flutter_bloc
+dio
+get_it
+hive
+hive_flutter
+connectivity_plus
+equatable
+
+---
+
+## Future Improvements
+
+* Unit Tests
+* Widget Tests
+* Shimmer Loading
+* Offline First Sync
+* Pagination Optimization
