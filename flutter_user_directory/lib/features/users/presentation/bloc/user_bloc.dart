@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_user_directory/features/users/presentation/bloc/bloc_helpers/debounce_transformer.dart';
 
 import '../../domain/entities/user_entity.dart';
 import '../../data/repository/user_repository_impl.dart';
@@ -13,7 +14,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc({required this.repository}) : super(UserState.initial()) {
     on<FetchUsers>(_onFetchUsers);
     on<FetchMoreUsers>(_onFetchMoreUsers);
-    on<SearchUsers>(_onSearchUsers);
+    on<SearchUsers>(
+      _onSearchUsers,
+      transformer: debounce(const Duration(milliseconds: 400)),
+    );
     on<ClearSearch>(_onClearSearch);
   }
 
@@ -89,8 +93,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
+  String normalize(String input) {
+    return input
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9 ]'), '') // remove special chars
+        .trim();
+  }
+
   void _onSearchUsers(SearchUsers event, Emitter<UserState> emit) {
-    final query = event.query.toLowerCase();
+    final query = normalize(event.query);
 
     final filtered = state.users.where((user) {
       return user.firstName.toLowerCase().contains(query) ||

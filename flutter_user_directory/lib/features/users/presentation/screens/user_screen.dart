@@ -59,14 +59,21 @@ class _UsersScreenState extends State<UsersScreen> {
         children: [
           _buildSearchBar(),
           Expanded(
-            child: BlocBuilder<UserBloc, UserState>(
+            child: BlocConsumer<UserBloc, UserState>(
               builder: (context, state) {
                 if (state.status == UserStatus.loading && state.users.isEmpty) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
                 if (state.status == UserStatus.failure && state.users.isEmpty) {
-                  return Center(child: Text(state.errorMessage));
+                  return Center(
+                    child: EmptyStateWidget(
+                      title: state.errorMessage,
+                      subtitle: '',
+                      icon: Icons.people_outline,
+                      onRetry: _onRefresh,
+                    ),
+                  );
                 }
 
                 if (state.status == UserStatus.empty &&
@@ -75,7 +82,7 @@ class _UsersScreenState extends State<UsersScreen> {
                     child: EmptyStateWidget(
                       title: 'No users match your search',
                       subtitle: 'Check spelling or try a different name',
-                      imagePath: '',
+                      icon: Icons.person_search_outlined,
                     ),
                   );
                 }
@@ -85,7 +92,7 @@ class _UsersScreenState extends State<UsersScreen> {
                     child: EmptyStateWidget(
                       title: 'No users available',
                       subtitle: 'There are no users to display at the moment',
-                      imagePath: '',
+                      icon: Icons.people_outline,
                       onRetry: _onRefresh,
                     ),
                   );
@@ -99,6 +106,17 @@ class _UsersScreenState extends State<UsersScreen> {
                     isLoadingMore: state.status == UserStatus.loadingMore,
                   ),
                 );
+              },
+              listener: (BuildContext context, UserState state) {
+                if (state.status == UserStatus.failure &&
+                    state.errorMessage.isNotEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.errorMessage),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
               },
             ),
           ),

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class EmptyStateWidget extends StatelessWidget {
   final String title;
   final String subtitle;
-  final String imagePath;
+  final IconData? icon;
 
   /// retry callback only for initial load / API failure
   final VoidCallback? onRetry;
 
   const EmptyStateWidget({
     super.key,
-    required this.imagePath,
+    required this.icon,
     this.title = "No Users Found",
     this.subtitle = "Nothing to show here",
     this.onRetry,
@@ -24,7 +24,13 @@ class EmptyStateWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(imagePath, height: 180, fit: BoxFit.contain),
+            // Image.asset(imagePath, height: 180, fit: BoxFit.contain),
+            Icon(
+              icon ?? Icons.sentiment_dissatisfied_outlined,
+              size: 80,
+              color: Colors.grey,
+            ),
+
             const SizedBox(height: 20),
 
             Text(
@@ -43,7 +49,7 @@ class EmptyStateWidget extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            /// 🔥 Show Retry ONLY when NOT searching
+            /// Show Retry ONLY when NOT searching
             if (onRetry != null)
               ElevatedButton(onPressed: onRetry, child: const Text("Retry")),
           ],

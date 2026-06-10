@@ -1,3 +1,4 @@
+import 'package:flutter_user_directory/core/network/connectivity_service.dart';
 import 'package:flutter_user_directory/core/network/http_client.dart';
 import 'package:flutter_user_directory/features/users/presentation/bloc/user_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -17,10 +18,14 @@ Future<void> initDependencies() async {
   // Hive Box
   sl.registerLazySingleton<Box>(() => Hive.box(AppConstants.usersBox));
 
+  // Connectivity Service
+  sl.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
+
   // Datasources
 
   sl.registerLazySingleton<UserRemoteDatasource>(
-    () => UserRemoteDatasourceImpl(sl()),
+    () =>
+        UserRemoteDatasourceImpl(sl<http.Client>(), sl<ConnectivityService>()),
   );
 
   sl.registerLazySingleton<UserLocalDatasource>(
