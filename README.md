@@ -39,6 +39,9 @@ Core
 
 * Network
 * Error Handling
+
+Injection
+
 * Dependency Injection
 
 ---
@@ -57,7 +60,7 @@ get_it
 
 ## Networking
 
-dio
+http
 
 ---
 
@@ -98,7 +101,9 @@ flutter run
 ## Packages Used
 
 flutter_bloc
-dio
+bloc_concurrency
+stream_transform
+http
 get_it
 hive
 hive_flutter
