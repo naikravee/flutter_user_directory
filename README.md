@@ -1,3 +1,5 @@
+**Note**: The complete assignment solution is available in the feature branch. Please switch to the feature branch to review the implementation and source code.
+
 # Flutter User Directory App
 
 A Flutter application developed as part of the Elyx Digital Flutter Developer Assignment.
